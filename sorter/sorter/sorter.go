@@ -49,6 +49,22 @@ func read_values(infile string)(values [] int, err error) {
   return
 }
 
+func write_values(outfile string, values [] int) error {
+  file, err := os.Create(outfile)
+  if err != nil {
+    fmt.Println("Failed to open file ", outfile)
+    return err
+  }
+  defer file.Close()
+
+  for _, value := range values {
+    str := strconv.Itoa(value)
+    file.WriteString(str + "\n")
+  }
+
+  return nil
+}
+
 func main() {
   flag.Parse()
   if infile != nil {
@@ -59,6 +75,13 @@ func main() {
   values, err := read_values(*infile)
   if err == nil {
     fmt.Println("Read values", values)
+  } else {
+    fmt.Println(err)
+  }
+
+  err = write_values(*outfile, values)
+  if err == nil {
+    fmt.Println("Write values", values)
   } else {
     fmt.Println(err)
   }
