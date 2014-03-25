@@ -6,6 +6,10 @@ import "fmt"
 import "io"
 import "os"
 import "strconv"
+import "time"
+
+import "algorithms/bubblesort"
+import "algorithms/qsort"
 
 var infile *string = flag.String("i", "unsorted.dat", "File contains values for sorting")
 var outfile *string = flag.String("o", "sorted.dat", "File to receive sorted values")
@@ -78,6 +82,19 @@ func main() {
   } else {
     fmt.Println(err)
   }
+
+  begin := time.Now()
+  switch *algorithm {
+    case "qsort":
+      qsort.QSort(values)
+    case "bubblesort":
+      bubblesort.BubbleSort(values)
+    default:
+      fmt.Println("Sorting Algorithm", *algorithm, "in either unknown or
+          unsupported.")
+  }
+  end := time.Now()
+  fmt.Println("Use ", end.Sub(begin), "to sort")
 
   err = write_values(*outfile, values)
   if err == nil {
