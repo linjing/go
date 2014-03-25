@@ -4,20 +4,20 @@ package qsort
 func quickSort(values [] int, left int, right int) {
   temp := values[left]
   p := left
-  i, j = left, right
+  i, j := left, right
 
   for i <= j {
     for j >= p && values[j] >= temp {
-      --j
+      j = j - 1
     }
 
     if j >= p && values[j] < temp {
-      values[p] := values[j]
+      values[p] = values[j]
       p = j
     }
 
     for i <= p && values[i] <= temp {
-      ++i
+      i = i + 1 
     }
     if i <= p && values[i] > temp {
       values[p] = values[i]
@@ -29,8 +29,8 @@ func quickSort(values [] int, left int, right int) {
   if p - left > 1 {
     quickSort(values, left, p - 1)
   }
-  if rigth - p > 1 {
-    quickSort(values, r + 1, right)
+  if right - p > 1 {
+    quickSort(values, p + 1, right)
   }
 }
 
